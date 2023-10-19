@@ -1,26 +1,25 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Modal } from "react-native";
 import Add from "react-native-vector-icons/Ionicons";
+import { useUser } from "../context/UserContext";
 
 export default function DashboardScreen() {
-  const [tasks, setTasks] = useState([]);
+  const { user, tasks } = useUser();
 
   const handleAddTask = () => {
-    setTasks([
-      ...tasks,
-      { name: "Fazer tal coisa", date: "15/07/2002", done: true },
-    ]);
+    console.log(user);
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>To Do</Text>
       <View style={styles.tasksContainer}>
-        {tasks.map((task, index) => (
-          <View key={index}>
-            <Task task={task} />
-          </View>
-        ))}
+        {tasks &&
+          tasks.map((task, index) => (
+            <View key={index}>
+              <Task task={task} />
+            </View>
+          ))}
       </View>
 
       <TouchableOpacity style={styles.addButton} onPress={handleAddTask}>

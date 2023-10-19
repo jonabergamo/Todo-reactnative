@@ -20,8 +20,8 @@ import {
 import { useUser } from "../context/UserContext";
 
 const LoginScreen = ({ navigation }) => {
-  const { handleLogin } = useUser();
-  const [email, setEmail] = useState("");
+  const { handleLogin, user } = useUser();
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,13 +29,15 @@ const LoginScreen = ({ navigation }) => {
   const onPressLogin = () => {
     setLoading(true);
     setError("");
-    if (email === "" && password === "") {
+    if (username === "" && password === "") {
       setError("Todos o campos são obrigatórios");
       return;
     }
-    const response = handleLogin(email, password);
+    const response = handleLogin(username, password);
     setLoading(false);
+    navigation.navigate("Dashboard");
   };
+
   const onPressSignUp = () => {
     navigation.navigate("SignUp");
   };
@@ -46,9 +48,9 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.inputView}>
         <TextInput
           style={styles.inputText}
-          placeholder="Email"
+          placeholder="Nome de usuário"
           placeholderTextColor="#003f5c"
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setUsername(text)}
         />
       </View>
       <View style={styles.inputView}>
